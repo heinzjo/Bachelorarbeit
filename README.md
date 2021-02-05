@@ -17,12 +17,12 @@ Die Ausführungen beruhen auf dem CorDapp Template - Kotlin, siehe https://githu
 Ändern Sie zunächst den Task ``deployNodes`` in der ``build.gradle`` Datei nach Ihren Wünschen ab.
 Wurden alle Knoten benannt und haben die richtigen Einstellungen können diese durch den Befehl 
 
-    ``gradlew deployNodes`` 
+    gradlew deployNodes
 
 ausgeführt in einer Kommandozeile im Haupverzeichnis erzeugt werden. 
 Die Knoten befinden sich nun im Verzeichnis
 
-    `build/nodes/`.
+    build/nodes/ .
 
 Jeder Knoten hat dabei einen eigenen Ordner.
 
@@ -30,11 +30,11 @@ Jeder Knoten hat dabei einen eigenen Ordner.
 
 Jeder Knoten kann z.B. über diesen Befehl ausgeführt in einer Kommandozeile im Verzeichnis des Knotens gestartet werden:
 
-    ``java -jar corda.jar``.
+    java -jar corda.jar .
 
 Alternativ, um alle gleichzeitig zu Starten, kann im Verzeichnis `build/nodes/` der Befehl ausgeführt werden:
 
-    ``runnodes.jar``
+    runnodes.jar
 
 Wurde der Knoten erfolgreich gestartet, zeigt der Knoten folgendes:
 
@@ -47,15 +47,15 @@ Wurde der Knoten erfolgreich gestartet, zeigt der Knoten folgendes:
 
 Der Befehl ``run`` zeigt eine Vielzahl an möglichen Funktionen, die aufgerufen werden können. Mittels dem Befehl 
 
-    ``flow list``
+    flow list
 
 werden alle auf dem Knoten installierten Flows dargestellt und mittels
 
-    ``flow start Flowname Flowparameter``
+    flow start Flowname Flowparameter
 
 kann ein Flow gestartet werden, im Beispiel der ProduceFlow:
 
-    ``flow start ProduceFlow weight: 25, number: 1, desc: "Biologisch", values: " "``
+    flow start ProduceFlow weight: 25, number: 1, desc: "Biologisch", values: " "
 
 Dieser Flow erzeugt einen Traubenkisten Datensatz mit 25 kg Gewicht und der Beschreibung Biologisch.
 
@@ -63,11 +63,11 @@ Dieser Flow erzeugt einen Traubenkisten Datensatz mit 25 kg Gewicht und der Besc
 
 Die jar Datei des WebServers wird über den Befehl gestartet im Hauptverzeichnis in einer Kommandozeile erstellt:
 
-    ``gradlew clients:bootjar``.
+    gradlew clients:bootjar.
 
 Die Datei liegt dann im Verzeichnis `clients/build/libs/` und kann z.B. gestartet werden durch:
 
-    ``java -jar corda-webserver.jar --spring.config.location=Pfad/zur/Datei/application.properties``.
+    java -jar corda-webserver.jar --spring.config.location=Pfad/zur/Datei/application.properties.
 
 In der application.properties Datei sind wichtige Informationen hinterlegt, sie sieht beispielsweise so aus:
     
@@ -80,7 +80,7 @@ In der application.properties Datei sind wichtige Informationen hinterlegt, sie 
 Die Parameter username und password sind standardmäßig so eingestellt, rpc.port beschreibt den RPC Port des
 entsprechenden Knotens und muss mit diesem übereinstimmen. Die Einstellungen server.port und rpc.host beschreiben unter welcher Web-Adresse der WebServer aufgerufen werden kann. Im Beispiel unter:
 
-    ``localhost:10055``
+    localhost:10055
 
 Über den WebServer kann nun mit dem Knoten kommuniziert werden.
 
@@ -93,17 +93,17 @@ die der Flows unter `workflows/src/main/kotlin/com/template/flows`.
 
 Um neue CorDapps zu erzeugen, müssen Sie neue jar Dateien erzeugen, dazu im Hauptverzeichnis in einer Kommandozeile:
 
-    ``gradlew jar``
+    gradlew jar
 
 ausführen.
 
 Die neuen jar Dateien befinden sich in den Verzeichnissen
 
-        `contracts/build/libs`
+        contracts/build/libs
 
     bzw.
-    
-        `workflows/build/libs`.
+
+        workflows/build/libs .
 
 Um die CorDapps auf den Knoten zu installieren müssen beide jar Dateien in das Verzeichnis `cordapps` jedes Knotens kopiert werden.
 
