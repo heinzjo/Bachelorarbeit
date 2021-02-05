@@ -1,1 +1,3 @@
-# Bachelorarbeit
+<p align="center">
+  BachelorArbeit
+</p>
