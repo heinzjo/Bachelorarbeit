@@ -1,3 +1,1 @@
-<p align="center">
-  BachelorArbeit
-</p>
+# Erprobung und Analyse des Einsatzes von Blockchain-TEchnologie in der Nahrungsmittel-Lieferkette auf Basis des Systems Corda.
