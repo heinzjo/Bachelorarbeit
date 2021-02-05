@@ -22,7 +22,7 @@ Wurden alle Knoten benannt und haben die richtigen Einstellungen können diese d
 ausgeführt in einer Kommandozeile im Haupverzeichnis erzeugt werden. 
 Die Knoten befinden sich nun im Verzeichnis
 
-    build/nodes/ .
+    build/nodes/
 
 Jeder Knoten hat dabei einen eigenen Ordner.
 
@@ -30,7 +30,7 @@ Jeder Knoten hat dabei einen eigenen Ordner.
 
 Jeder Knoten kann z.B. über diesen Befehl ausgeführt in einer Kommandozeile im Verzeichnis des Knotens gestartet werden:
 
-    java -jar corda.jar .
+    java -jar corda.jar
 
 Alternativ, um alle gleichzeitig zu Starten, kann im Verzeichnis `build/nodes/` der Befehl ausgeführt werden:
 
@@ -63,7 +63,7 @@ Dieser Flow erzeugt einen Traubenkisten Datensatz mit 25 kg Gewicht und der Besc
 
 Die jar Datei des WebServers wird über den Befehl gestartet im Hauptverzeichnis in einer Kommandozeile erstellt:
 
-    gradlew clients:bootjar.
+    gradlew clients:bootjar
 
 Die Datei liegt dann im Verzeichnis `clients/build/libs/` und kann z.B. gestartet werden durch:
 
@@ -103,7 +103,7 @@ Die neuen jar Dateien befinden sich in den Verzeichnissen
 
     bzw.
 
-        workflows/build/libs .
+        workflows/build/libs
 
 Um die CorDapps auf den Knoten zu installieren müssen beide jar Dateien in das Verzeichnis `cordapps` jedes Knotens kopiert werden.
 

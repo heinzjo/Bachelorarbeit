@@ -1,0 +1,26 @@
+  req = [
+    {
+      "description": "Sauer",
+      "certificationBody": "CN=ZS, O=Zertifizierungsstelle, L=Berlin, C=DE",
+      "owner": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "consumed": false,
+      "linearId": "3e10b23f-2fa5-4759-8af7-00a60d5794ea",
+      "stateRef": null
+    },
+    {
+      "description": "Sauer",
+      "certificationBody": "CN=ZS, O=Zertifizierungsstelle, L=Berlin, C=DE",
+      "owner": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "consumed": false,
+      "linearId": "bb252d68-43c0-4938-8fcd-00e4d0fa605a",
+      "stateRef": null
+    },
+    {
+      "description": "Sauer",
+      "certificationBody": "CN=ZS, O=Zertifizierungsstelle, L=Berlin, C=DE",
+      "owner": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "consumed": false,
+      "linearId": "9330a8b4-7439-4001-b959-fc06b083b35b",
+      "stateRef": null
+    }
+  ]

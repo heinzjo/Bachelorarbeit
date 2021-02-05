@@ -1,0 +1,62 @@
+
+  tx = [
+  {
+    "id": "ED6F023C48408A11423FA1A30C00510E2530FF52F6C7712729BC68A6BE2E8999",
+    "flow": "CertFlow",
+    "inputs": [
+      ""
+    ],
+    "outputs": "[CertState(description\u003dBiologisch, certificationBody\u003dCN\u003dZS, O\u003dZertifizierungsstelle, L\u003dBerlin, C\u003dDE, owningParty\u003dCN\u003dFarmer, O\u003dFarmer, L\u003dLondon, C\u003dGB, created\u003d2020-08-15T16:00:00.236, expires\u003d2020-08-16T16:00:00.236, revoked\u003dfalse, revocationTimestamp\u003dnull, linearId\u003d324a1315-4995-4731-bef3-1b35569357f5)]",
+    "notary": "O\u003dNotary, L\u003dLondon, C\u003dGB",
+    "message": "Transaktion wurde erfolgreich ausgef?hrt.\r\nID: ED6F023C48408A11423FA1A30C00510E2530FF52F6C7712729BC68A6BE2E8999\r\nBesitzer: Farmer kg\r\nBeschreibung: Biologisch\nL?uft in 1 Tagen ab.",
+    "commands": "CertContract.Commands.Create]",
+    "inputList": []
+  },
+  {
+    "id": "F46E83AA7412B8C76D8C03AF2ECE3243E8FB48EA8BF2D04E1F8B5C959C61702A",
+    "flow": "ProduceFlow",
+    "inputs": [
+      ""
+    ],
+    "outputs": "[GrapeState(weight\u003d9, harvest_date\u003d2020-08-15T16:00:28.576, current_date\u003d2020-08-15T16:00:28.576, description\u003dBiologisch, organic\u003dfalse, manufacturer\u003dCN\u003dFarmer, O\u003dFarmer, L\u003dLondon, C\u003dGB, owner\u003dCN\u003dFarmer, O\u003dFarmer, L\u003dLondon, C\u003dGB, linearId\u003d60110d25-36af-4b65-9844-68717240e374)]",
+    "notary": "O\u003dNotary, L\u003dLondon, C\u003dGB",
+    "message": "Transaktion wurde erfolgreich ausgef?hrt.\r\nID: F46E83AA7412B8C76D8C03AF2ECE3243E8FB48EA8BF2D04E1F8B5C959C61702A\r\nGewicht: 9 kg\r\nBeschreibung: Biologisch",
+    "commands": "GrapeContract.Commands.Create",
+    "inputList": []
+  },
+  {
+    "id": "BD1D5E7C224F3E8F78260F2249A533E4548D2AE3806206E358867417BA37D438",
+    "flow": "CertGrapeFlow",
+    "inputs": [
+      "F46E83AA7412B8C76D8C03AF2ECE3243E8FB48EA8BF2D04E1F8B5C959C61702A",
+      " ED6F023C48408A11423FA1A30C00510E2530FF52F6C7712729BC68A6BE2E8999"
+    ],
+    "outputs": "[GrapeState(weight\u003d9, harvest_date\u003d2020-08-15T16:00:28.576, current_date\u003d2020-08-15T16:00:47.206, description\u003dBiologisch, organic\u003dtrue, manufacturer\u003dCN\u003dFarmer, O\u003dFarmer, L\u003dLondon, C\u003dGB, owner\u003dCN\u003dFarmer, O\u003dFarmer, L\u003dLondon, C\u003dGB, linearId\u003d60110d25-36af-4b65-9844-68717240e374)]",
+    "notary": "O\u003dNotary, L\u003dLondon, C\u003dGB",
+    "message": "Transaktion wurde erfolgreich ausgef?hrt.\r\nID: BD1D5E7C224F3E8F78260F2249A533E4548D2AE3806206E358867417BA37D438\r\nTraubenID: 60110d25-36af-4b65-9844-68717240e374 \r\nZertifikatID: 324a1315-4995-4731-bef3-1b35569357f5\n",
+    "commands": "[GrapeContract.Commands.Check, CertContract.Commands.Check]",
+    "inputList": [
+      "F46E83AA7412B8C76D8C03AF2ECE3243E8FB48EA8BF2D04E1F8B5C959C61702A",
+      "ED6F023C48408A11423FA1A30C00510E2530FF52F6C7712729BC68A6BE2E8999",
+      " ED6F023C48408A11423FA1A30C00510E2530FF52F6C7712729BC68A6BE2E8999",
+      ""
+    ]
+  },
+  {
+    "id": "752236AD87C41BAE6BB9665ADF8451026349B326D42CBAEAA0819DE112E4209B",
+    "flow": "TradeFlow",
+    "inputs": [
+      "BD1D5E7C224F3E8F78260F2249A533E4548D2AE3806206E358867417BA37D438"
+    ],
+    "outputs": "[GrapeState(weight\u003d9, harvest_date\u003d2020-08-15T16:00:28.576, current_date\u003d2020-08-15T16:01:27.021, description\u003dBiologisch, organic\u003dtrue, manufacturer\u003dCN\u003dFarmer, O\u003dFarmer, L\u003dLondon, C\u003dGB, owner\u003dCN\u003dTrader, O\u003dHändler, L\u003dNew York, C\u003dUS, linearId\u003d60110d25-36af-4b65-9844-68717240e374)]",
+    "notary": "O\u003dNotary, L\u003dLondon, C\u003dGB",
+    "message": "Transaktion wurde erfolgreich ausgeführt.\r\nID: 752236AD87C41BAE6BB9665ADF8451026349B326D42CBAEAA0819DE112E4209B\r\nNeuer Besitzer: Händler\r\nTraubenID: 60110d25-36af-4b65-9844-68717240e374",
+    "commands": "GrapeContract.Commands.Trade",
+    "inputList": [
+      "BD1D5E7C224F3E8F78260F2249A533E4548D2AE3806206E358867417BA37D438",
+      "F46E83AA7412B8C76D8C03AF2ECE3243E8FB48EA8BF2D04E1F8B5C959C61702A",
+      "ED6F023C48408A11423FA1A30C00510E2530FF52F6C7712729BC68A6BE2E8999",
+      ""
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.template.cordapp-template-kotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/com.template.cordapp-template-kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.template.cordapp-template-kotlin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.template.cordapp-template-kotlin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.template.cordapp-template-kotlin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.template.cordapp-template-kotlin.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/clients/cordapp-template-kotlin.clients.iml" filepath="$PROJECT_DIR$/.idea/modules/clients/cordapp-template-kotlin.clients.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/clients/cordapp-template-kotlin.clients.main.iml" filepath="$PROJECT_DIR$/.idea/modules/clients/cordapp-template-kotlin.clients.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/clients/cordapp-template-kotlin.clients.test.iml" filepath="$PROJECT_DIR$/.idea/modules/clients/cordapp-template-kotlin.clients.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contracts/cordapp-template-kotlin.contracts.iml" filepath="$PROJECT_DIR$/.idea/modules/contracts/cordapp-template-kotlin.contracts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contracts/cordapp-template-kotlin.contracts.main.iml" filepath="$PROJECT_DIR$/.idea/modules/contracts/cordapp-template-kotlin.contracts.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contracts/cordapp-template-kotlin.contracts.test.iml" filepath="$PROJECT_DIR$/.idea/modules/contracts/cordapp-template-kotlin.contracts.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.iml" filepath="$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.integrationTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.main.iml" filepath="$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.test.iml" filepath="$PROJECT_DIR$/.idea/modules/workflows/cordapp-template-kotlin.workflows.test.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,39 @@
+
+  peers = [
+    {
+      "commonName": "ZS",
+      "organisationUnit": null,
+      "organisation": "Zertifizierungsstelle",
+      "locality": "Berlin",
+      "state": null,
+      "country": "DE",
+      "x500Principal": {
+        "name": "CN=ZS,O=Zertifizierungsstelle,L=Berlin,C=DE",
+        "encoded": "MEsxCzAJBgNVBAYTAkRFMQ8wDQYDVQQHDAZCZXJsaW4xHjAcBgNVBAoMFVplcnRpZml6aWVydW5nc3N0ZWxsZTELMAkGA1UEAwwCWlM="
+      }
+    },
+    {
+      "commonName": null,
+      "organisationUnit": null,
+      "organisation": "Notary",
+      "locality": "London",
+      "state": null,
+      "country": "GB",
+      "x500Principal": {
+        "name": "O=Notary,L=London,C=GB",
+        "encoded": "MC8xCzAJBgNVBAYTAkdCMQ8wDQYDVQQHDAZMb25kb24xDzANBgNVBAoMBk5vdGFyeQ=="
+      }
+    },
+    {
+      "commonName": "Trader",
+      "organisationUnit": null,
+      "organisation": "Händler",
+      "locality": "New York",
+      "state": null,
+      "country": "US",
+      "x500Principal": {
+        "name": "CN=Trader,O=Händler,L=New York,C=US",
+        "encoded": "MEQxCzAJBgNVBAYTAlVTMREwDwYDVQQHDAhOZXcgWW9yazERMA8GA1UECgwISMOkbmRsZXIxDzANBgNVBAMMBlRyYWRlcg=="
+      }
+    }
+  ]

@@ -1,0 +1,39 @@
+
+  grapestates = [
+    {
+      "manufacturer": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "owner": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "weight": 5,
+      "description": "Suess",
+      "harvest_date": "2020-08-16T11:24:13.753",
+      "current_date": "2020-08-16T11:24:13.753",
+      "organic": false,
+      "consumed": false,
+      "linearId": "1b8019d3-7d7e-45e6-a47e-aff2a1951d74",
+      "stateRef": null
+    },
+    {
+      "manufacturer": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "owner": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "weight": 5,
+      "description": "Suess",
+      "harvest_date": "2020-08-16T11:24:13.753",
+      "current_date": "2020-08-16T11:24:13.753",
+      "organic": false,
+      "consumed": false,
+      "linearId": "d1a369e5-cc21-4720-af86-c113a6648b5f",
+      "stateRef": null
+    },
+    {
+      "manufacturer": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "owner": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "weight": 5,
+      "description": "Sauer",
+      "harvest_date": "2020-08-16T11:24:13.753",
+      "current_date": "2020-08-16T11:24:13.753",
+      "organic": false,
+      "consumed": true,
+      "linearId": "d985891f-5a8f-4cfa-bc6a-b61b4ede246c",
+      "stateRef": null
+    }
+  ]

@@ -1,0 +1,38 @@
+  certstates = [
+    {
+      "description": "Suess",
+      "certificationBody": "CN=ZS, O=Zertifizierungsstelle, L=Berlin, C=DE",
+      "owningParty": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "created": "2020-08-16T11:27:46.529",
+      "expires": "2020-08-20T11:27:46.529",
+      "revoked": false,
+      "revocationTimestamp": null,
+      "consumed": false,
+      "linearId": "7a1c032c-d8fd-43cb-8269-3e27e2279c96",
+      "stateRef": null
+    },
+    {
+      "description": "Suess",
+      "certificationBody": "CN=ZS, O=Zertifizierungsstelle, L=Berlin, C=DE",
+      "owningParty": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "created": "2020-08-16T11:27:46.529",
+      "expires": "2020-08-20T11:27:46.529",
+      "revoked": false,
+      "revocationTimestamp": null,
+      "consumed": false,
+      "linearId": "d97a8227-b26d-42a6-95b1-aac821643b96",
+      "stateRef": null
+    },
+    {
+      "description": "Suess",
+      "certificationBody": "CN=ZS, O=Zertifizierungsstelle, L=Berlin, C=DE",
+      "owningParty": "CN=Farmer, O=Farmer, L=London, C=GB",
+      "created": "2020-08-16T11:27:46.529",
+      "expires": "2020-08-20T11:27:46.529",
+      "revoked": false,
+      "revocationTimestamp": null,
+      "consumed": false,
+      "linearId": "98d0efb8-59fe-4ca3-bcff-5f264111ed22",
+      "stateRef": null
+    }
+  ]

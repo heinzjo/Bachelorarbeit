@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Corda Knoten</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="app.js"></script>
+
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+
+  <style>
+    .info {
+      position: relative;
+      float: right;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .newInput {
+      position: relative;
+      float: left;
+      display: flex;
+      flex-direction: column;
+    }
+
+    b {
+      display: inline-block;
+    }
+
+    b::first-letter {
+      text-transform: capitalize;
+    }
+
+    table {
+      table-layout: fixed;
+      padding-left: 30px;
+      padding-right: 30px;
+      border-collapse: separate;
+      width: 100%;
+    }
+
+    td,
+    th {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      border: 1px solid black;
+      text-align: center;
+      padding: 8px;
+    }
+
+    [data-val] {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      
+    }
+
+    [data-val]:hover {
+      content: attr(data-val);
+      position: absolute;
+      padding: 5px;
+      background: #000;
+      bottom: 5px;
+      color: #fff;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    .overflow {
+      text-overflow: clip;
+      word-break: break-all;
+    }
+
+    .toSearchInSpan {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75%;
+    }
+  </style>
+</head>
+
+<!--
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+    Navigationsleiste
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+-->
+<body ng-app="demoAppModule" ng-controller="DemoAppController as demoApp">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" style="color: white;">{{demoApp.thisNode}}</a>
+      </div>
+      <button ng-click="demoApp.changeView('grapes')" type="button" class="btn
+          btn-light navbar-btn" ng-show="demoApp.thisNodeFarmer || demoApp.thisNodeTrader">
+        Kisten verwalten
+      </button>
+      <button ng-click="demoApp.changeView('certs')" type="button" class="btn
+          btn-light navbar-btn" ng-show="demoApp.thisNodeFarmer || demoApp.thisNodeCB">
+        Zertifikate verwalten
+      </button>
+      <button ng-click="demoApp.changeView('transactions')" type="button" class="btn btn-light navbar-btn">
+        Transaktionen
+      </button>
+      <button ng-click="demoApp.changeView('peers')" type="button" class="btn
+          btn-light navbar-btn" ng-show="!demoApp.showPeerColumn">
+        Netzwerkteilnehmer
+      </button>
+    </div>
+  </nav>
+
+  <!--
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+    Skripte
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+-->
+  <!--Kiste anlegen-->
+  <script type="text/ng-template" id="openCreate.html">
+      <div class="modal-header">
+          <h4 class="modal-title">Neue Kiste anlegen</h4>
+      </div>
+      <form>
+          <div id="kisteform" class="modal-body">
+              <div class="form-group">
+                  <label for="weight" class="control-label">Gewicht (kg):</label>
+                  <input type="number" min="1" placeholder="Hier das Gewicht der Kiste eintragen." ng-model="openCreateInstance.form.weight" class="form-control" id="weight">
+              </div>
+
+              <div class="form-group">
+                <label for="number" class="control-label">Anzahl:</label>
+                <input type="number" min="1" placeholder="Hier die gewünschte Anzahl eintragen." ng-model="openCreateInstance.form.number" class="form-control" id="number">
+              </div>
+
+              <div class="form-group">
+                <label for="desc" class="control-label">Beschreibung:</label>
+                <input type="text" min="1" placeholder="Hier die gewünschte Anzahl eintragen." ng-model="openCreateInstance.form.desc" class="form-control" id="desc">
+              </div>
+
+            <input type="hidden" id="valuecounter" value="0">
+
+              <div ng-show="openCreateInstance.formError" class="form-group">
+                  <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Fehler:</span>
+                      Bitte gültige Eingaben für alle Felder machen!
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <div id="container" class="newInput">
+              <input id="newinput" type="text" placeholder="Neuer Wert" class="form-control">
+              <input value="Neuer Wert hinzufügen" type="button" onClick="add()" class="btn btn-primary">
+              </div>
+              <button ng-click="openCreateInstance.cancel()" type="button" class="btn btn-default">Abbrechen</button>
+              <button ng-click="openCreateInstance.create()" type="button" class="btn btn-primary">Kiste anlegen</button>
+          </div>
+      </form>
+    </script>
+  <!--Fügt ein weiteres Feld dem Kiste erstellen Formular hinzu-->
+  <script>
+    var i = 0;
+    function add() {
+      if (document.getElementById('newinput').value != '') {
+        i++;
+        var title = document.getElementById('newinput').value;
+        var node = document.createElement('div');
+        node.innerHTML = '<h5></h5><label class="control-label" id="title' + i + '">' + title + ':</label><div><input type="text" id="check' + i + '" class="form-control" style="width:94%; float: left"><button type="button" onClick="remove(' + i + ')" style="border-radius: 50%; background-color: red; font-size: large; position: relative; left: 5px;" id=button' + i + '>-</button></div>';
+        document.getElementById('kisteform').appendChild(node);
+        document.getElementById('newinput').value = '';
+        document.getElementById('valuecounter').value = i;
+      }
+    }
+  </script>
+  <!--Entfernt ein zuvor erstelltes Feld aus dem Kiste erstellen Formular-->
+  <script>
+    function remove(id) {
+      var elemTitle = document.getElementById('title' + id);
+      var elemInput = document.getElementById('check' + id);
+      var elemButton = document.getElementById('button' + id);
+      elemTitle.parentNode.removeChild(elemTitle);
+      elemInput.parentNode.removeChild(elemInput);
+      elemButton.parentNode.removeChild(elemButton);
+    }
+  </script>
+  <!--Zertifikat an Landwirt ausstellen-->
+  <script type="text/ng-template" id="openCert.html">
+      <div class="modal-header">
+          <h4 class="modal-title">Neues Zertifikat ausstellen:</h4>
+      </div>
+      <form>
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="weight" class="control-label">Dauer (Tage):</label>
+                <input type="number" min="1" placeholder="Hier das Ablaufdatum eintragen." ng-model="openCertInstance.form.period" class="form-control" id="weight">
+              </div>
+
+              <div ng-show="openCertInstance.formError" class="form-group">
+                  <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Fehler:</span>
+                      Bitte wählen Sie eine Dauer aus!
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button ng-click="openCertInstance.cancel()" type="button" class="btn btn-default">Abbrechen</button>
+              <button ng-click="openCertInstance.cert()" type="button" class="btn btn-primary">Zertifikat ausstellen</button>
+          </div>
+      </form>
+    </script>
+  <!--Kiste zertifzieren-->
+  <script type="text/ng-template" id="openCertify.html">
+      <div class="modal-header">
+          <h4 class="modal-title">Möchten Sie diese Kiste zertifizieren?</h4>
+      </div>
+      <div class="modal-body">
+          <h4>Ein entsprechendes Zertifikat wird dafür verbraucht werden.</h4>
+      </div>
+      <form>
+          <div class="modal-footer">
+              <button ng-click="openCertifyInstance.cancel()" type="button" class="btn btn-default">Abbrechen</button>
+              <button ng-click="openCertifyInstance.certify()" type="button" class="btn btn-primary">Kiste zertifizieren</button>
+          </div>
+      </form>
+      <div ng-show="openCertInstance.formError" class="form-group">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Fehler:</span>
+            Bitte gültige Eingaben machen
+        </div>
+    </div>
+    </script>
+  <!--Kiste handeln-->
+  <script type="text/ng-template" id="openTrade.html">
+      <div class="modal-header">
+          <h4 class="modal-title">Traubenkiste handeln</h4>
+      </div>
+      <form>
+          <div class="modal-body">
+              <div class="form-group">
+                  <label for="newOwner2" class="control-label">Neuer Besitzer:</label>
+                  <select ng-model="openTradeInstance.form.newOwner" class="form-control" id="newOwner2"
+                          ng-options="peer.x500Principal.name for peer in openTradeInstance.peers">
+                      <option value="" disabled selected hidden>Hier den neuen Besitzer auswählen.</option>
+                  </select>
+
+              </div>
+              <div ng-show="openTradeInstance.formError" class="form-group">
+                  <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Fehler:</span>
+                      Bitte einen neuen Besitzer auswählen!
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button ng-click="openTradeInstance.cancel()" type="button" class="btn btn-default">Abbrechen</button>
+              <button ng-click="openTradeInstance.create()" type="button" class="btn btn-primary">Handeln</button>
+          </div>
+      </form>
+    </script>
+  <!--Zertifikat Anfrage stellen-->
+  <script type="text/ng-template" id="openReq.html">
+      <div class="modal-header">
+          <h4 class="modal-title">Neue Zertifikat-Anfrage stellen</h4>
+      </div>
+      <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="certificationBody" class="control-label">Zertifizierungsstelle auswählen:</label>
+              <select ng-model="openReqInstance.form.certificationBody" class="form-control" id="certificationBody"
+                      ng-options="peer.x500Principal.name for peer in openReqInstance.peers">
+                  <option value="" disabled selected hidden>Hier die Zertifizierungsstelle auswählen.</option>
+              </select>
+
+          </div>
+              <div class="form-group">
+                <label for="description" class="control-label">Beschreibung:</label>
+                <input type="text" placeholder="Hier die gewünschte Beschreibung eintragen" ng-model="openReqInstance.form.description" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="number" class="control-label">Anzahl:</label>
+                <input type="number" min="1" placeholder="Hier die gewünschte Anzahl eintragen." ng-model="openReqInstance.form.number" class="form-control" id="number">
+            </div>
+              <div ng-show="openReqInstance.formError" class="form-group">
+                  <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Fehler:</span>
+                      Bitte gültige Eingaben für alle Felder machen!
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button ng-click="openReqInstance.cancel()" type="button" class="btn btn-default">Abbrechen</button>
+              <button ng-click="openReqInstance.req()" type="button" class="btn btn-primary">Anfrage stellen</button>
+          </div>
+      </form>
+    </script>
+  <!--Anzeige von zu großen Texten als Alert-->
+  <script type="text/ng-template" id="messageContent.html">
+      <div class="modal-body" id="modal-body">
+          {{ modalInstanceTwo.message }}
+      </div>
+  </script>
+  <!--
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+    Anzeigen
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+-->
+  <!--Traubenkisten-->
+  <div ng-show="demoApp.showGrapes">
+    <div class="col-md-5">
+      <div class="panel-group" id="accordion">
+        <div class="panel">
+          <div class="panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                Meine Traubenkisten:
+              </h4>
+              <div class="info">
+                <button ng-click="demoApp.openCreate()" type="button" class="btn btn-sm btn-default"
+                  ng-show="demoApp.thisNodeFarmer">
+                  Traubenkisten erzeugen
+                </button>
+              </div>
+              <label><input style="color: black; max-width: 100px;" ng-model="searchTextStates"
+                  placeholder="Suchen"></label>
+            </div>
+          </div>
+          <div>
+            <div ng-show="!demoApp.myGrapeStates.length" clsass="panel-body">
+              Nutzen Sie den Button um Kisten anzulegen.
+            </div>
+            <div ng-repeat="state in demoApp.myGrapeStates |
+                filter:searchTextStates | orderBy:'-Erntedatum'" class="panel panel-default">
+              <div class="panel-body" id="inside_accordion">
+                <div class="info">
+                  <button ng-click="demoApp.openTrade(state.ID)" type="button" class="btn btn-primary"
+                    ng-show="!state.consumed">
+                    Kiste handeln
+                  </button>
+                  <label style="color: red; border: 2px solid red; padding:
+                      4px;" ng-show="state.consumed">Archiviert</label>
+                  <div style="padding-bottom: 5px;"></div>
+                  <button ng-show="(!state.consumed && state.Zertifiziert == 'false' &&
+                      demoApp.thisNodeFarmer)" ng-click="demoApp.openCertify(state.ID,state.Beschreibung)"
+                    type="button" class="btn btn-primary">
+                    Zertifizieren</button>
+                  <div style="padding-bottom: 5px;"></div>
+                  <button ng-click="demoApp.showTXValuesShort(state.ID)" type="button" class="btn btn-primary">
+                    Transaktionen</button>
+                </div>
+                <ul>
+                  <li ng-show="!(key == 'consumed' || key == 'fileHash' || key == 'Sonstiges')"
+                    ng-repeat="(key,value) in state">
+                    <b>{{key}}:</b> {{value}}
+                  </li>
+                  <li ng-show="state.Sonstiges">
+                    <b>Sonstiges:</b>
+                    <p ng-repeat="(key,value) in state.Sonstiges">
+                      <b>- {{key}}:</b> {{value}}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Zertifikate-->
+  <div class="col-md-5" ng-show="demoApp.showCerts">
+    <div class="panel-group" id="accordion3">
+      <div class="panel">
+        <div class="panel-primary">
+          <div class="panel-heading">
+            <h4 class="panel-title" ng-show="demoApp.thisNodeFarmer">
+              Meine Zertifikate:
+            </h4>
+            <h4 class="panel-title" ng-show="demoApp.thisNodeCB">
+              Verteilte Zertifikate:
+            </h4>
+            <div class="info">
+              <button ng-click="demoApp.openReq()" type="button" class="btn
+                  btn-sm btn-default" ng-show="demoApp.thisNodeFarmer">
+                Zertifikate anfragen
+              </button>
+            </div>
+            <label><input style="color: black; max-width: 100px;" ng-model="searchTextCert"
+                placeholder="Suchen"></label>
+          </div>
+        </div>
+        <div>
+          <div ng-show="!demoApp.myCertStates.length" clsass="panel-body">
+            Keine Zertifikate vorhanden.
+          </div>
+          <div ng-repeat="cert in demoApp.myCertStates |
+              filter:searchTextCert" class="panel panel-default">
+
+            <div class="panel-body">
+              <label style="color: red; border: 2px solid red; padding: 4px;
+                  position: relative;float: right;" ng-show="cert.consumed">Archiviert</label>
+              <ul>
+                <li ng-show="!(key == 'consumed' || key == 'fileHash' || key
+                    == 'Feld' || key == 'Sonstiges')" ng-repeat="(key,value) in cert">
+                  <b>{{key}}:</b> {{value}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Angefragte Transaktionen-->
+  <div class="col-md-5" ng-show="demoApp.showCerts">
+    <div class="panel-group" id="accordion3">
+      <div class="panel">
+        <div class="panel-primary">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              Angefragte Zertifikate:
+            </h4>
+            <label><input style="color: black; max-width: 100px;" ng-model="searchTextCertR"
+                placeholder="Suchen"></label>
+          </div>
+        </div>
+        <div>
+          <div ng-show="!demoApp.myRequestStates.length" clsass="panel-body">
+            Keine Zertifikate vorhanden.
+          </div>
+          <div ng-repeat="req in demoApp.myRequestStates |
+              filter:searchTextCertR" class="panel panel-default">
+
+            <div class="panel-body">
+              <div class="info">
+                <label style="color: red; border: 2px solid red; padding: 4px;
+                    position: relative;float: right;" ng-show="req.consumed">Archiviert</label>
+                <button ng-show="!req.consumed && demoApp.thisNodeCB"
+                  ng-click="demoApp.openCert(req.ID,req.Beschreibung,req.Besitzer)" type="button"
+                  class="btn btn-primary">
+                  Ausstellen</button>
+              </div>
+              <ul>
+                <li ng-show="!(key == 'consumed' || key == 'fileHash' || key
+                    == 'Feld' || key == 'Sonstiges')" ng-repeat="(key,value) in req">
+                  <b>{{key}}:</b> {{value}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Netzwerkteilnehmer-->
+  <div class="col-md-4" ng-show="demoApp.showPeers">
+    <div class="panel-group" id="accordion2">
+      <div class="panel">
+        <div class="panel-primary">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              Sonstige Netzwerkteilnehmer:
+            </h4>
+            <h4></h4>
+            <label><input style="color: black; max-width: 100px;" ng-model="searchTextPeers"
+                placeholder="Suchen"></label>
+          </div>
+        </div>
+        <div>
+          <div ng-show="!demoApp.peers.length" clsass="panel-body">
+            Keine weiteren Teilnehmer bekannt.
+          </div>
+          <div ng-repeat="peer in demoApp.peers | filter:searchTextPeers" class="panel panel-default">
+            <div class="panel-body">
+              <ul>
+                <li><b>Organisation:</b> {{peer.organisation}}</li>
+                <li><b>Stadt:</b> {{peer.locality}}</li>
+                <li><b>Land:</b> {{peer.country}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Transaktionen-->
+  <div ng-show="demoApp.showTransaction">
+    <h2 style="padding-left: 60px;">Eigene Transaktionen:</h2>
+    <table>
+      <th>ID:</th>
+      <th>Flow:</th>
+      <th>Inputs:</th>
+      <th>Outputs:</th>
+      <th>Notar:</th>
+      <th>Commands:</th>
+      <th>Download:</th>
+      <tr data-ng-repeat="tx in demoApp.transactions">
+        <td data-title="'ID'">{{tx.id}}</td>
+        <td data-title="'Flow'">{{tx.flow}}</td>
+        <td data-title="'Inputs'">
+          <button class="btn btn-primary btn-sm" ng-click="demoApp.alert(tx.input)" ng-show="tx.input != 'Keine'">
+            anzeigen
+          </button>
+          <h5 ng-show="tx.input == 'Keine'">{{tx.input}}</h5>
+        </td>
+        <td data-title="'Outputs'">
+          <button class="btn btn-primary btn-sm" ng-click="demoApp.alert(tx.output)">
+            anzeigen
+          </button>
+        </td>
+        <td data-title="'Notar'">{{tx.notary}}</td>
+        <td data-title="'Commands'">{{tx.commands}}</td>
+        <td data-title="'Download'">
+          <a href="/dl/{{tx.fileHash}}" class="btn btn-primary" type="button" ng-show="tx.fileHash != 'Kein'"
+            style="margin-bottom: 5px;">Datei herunterladen</a>
+          <h5 ng-show="tx.fileHash == 'Kein'">Keine Datei</h5>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <!--Transaktionen zu einer bestimmten Traubenkiste-->
+  <div class="col-md-5" ng-show="demoApp.showTXValues">
+    <div class="panel-group" id="accordion2">
+      <div class="panel">
+        <div class="panel-primary">
+          <div class="panel-heading">
+            <div class="info">
+              <a href="/dl/{{demoApp.txToUse.fileHash}}" class="btn btn-sm btn-default" type="button"
+                ng-show="demoApp.txToUse.fileHash != 'Kein'" style="margin-bottom: 5px;">Datei Herunterladen</a>
+            </div>
+            <h4 class="panel-title">
+              State {{demoApp.currentStateIDShown}}:
+            </h4>
+            <h4></h4>
+            <h4></h4>
+          </div>
+        </div>
+        <div>
+          <div ng-repeat="txS in demoApp.transactionShort" class="panel panel-default">
+            <div class="panel-body">
+              <ul>
+                <li
+                  ng-show="!(key == 'consumed' || key == 'fileHash' || key == 'linearId' || key == 'output' || key == 'commands')"
+                  ng-repeat="(key,value) in txS">
+                  <b>{{key}}:</b> <span class="overflow">{{value}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
